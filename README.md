@@ -15,3 +15,4 @@ the training set, 10K as the validation set, and 10K for testing. And all the da
 ```
 python main.py
 ```
+And you can change the dataset in config.py, other hyperparametric can also be modified in this file
