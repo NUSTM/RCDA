@@ -5,7 +5,7 @@ class Config(object):
 
     def __init__(self):
         #
-        self.data_type = 'sst5' #you can change the dataset here, and 'sst2','rt','sst5','yelp' are available
+        self.data_type = 'sst5' #you can change the dataset here, and 'sst','rt','sst5','yelp' are available
         self.num_labels = 5 if self.data_type=='sst5' or self.data_type=='yelp' else 2
         self.m = 16
         self.t = 0.8 if self.num_labels == 2 else 0.4
