@@ -8,14 +8,14 @@ This repository contains code for our EMNLP2021 paper:
 ## Datasets
 
 We conduct experiments on four benchmark datasets for sentence-level sentiment classification, namely, SST-2, SST-5, RT and Yelp. For Yelp we sample 100K data as
-the training set, 10K as the validation set, and 10K for testing. And all the datasets have been uploaded to data folder
+the training set, 10K as the validation set, and 10K for testing. And all the datasets have been uploaded to data folder.
 
 ## Usage
 
 ```
 python main.py
 ```
-And you can change the dataset in config.py, other hyperparametric can also be modified in this file
+And you can change the dataset in config.py, other hyperparametric can also be modified in this file.
 
 
 ## Methods
@@ -23,7 +23,7 @@ And you can change the dataset in config.py, other hyperparametric can also be m
 he overall architecture of our joint counterfactual data generation and dual sentiment classification framework. The left part is the generator, which acts as an agent in reinforcement learning, and the right side is the discriminator containing two sentiment predictors. 
 
 <p align="center">
-  <img src="method.png" width="50%"/>
+  <img src="method.png" width="70%"/>
 </p>
 <!-- ![Alt text:center](img/method.PNG?raw=true "method") -->
 
