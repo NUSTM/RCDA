@@ -20,7 +20,7 @@ And you can change the dataset in config.py, other hyperparametric can also be m
 
 ## Methods
 
-he overall architecture of our joint counterfactual data generation and dual sentiment classification framework. The left part is the generator, which acts as an agent in reinforcement learning, and the right side is the discriminator containing two sentiment predictors. 
+The overall architecture of our joint counterfactual data generation and dual sentiment classification framework. The left part is the generator, which acts as an agent in reinforcement learning, and the right side is the discriminator containing two sentiment predictors. 
 
 <p align="center">
   <img src="method.png" width="70%"/>
