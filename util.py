@@ -15,6 +15,7 @@ NOUN=['NN','NNS']
 
 def get_antonym_word_list(word):
     antonym_word_list = []
+
     for syn in wn.synsets(word):
         for term in syn._lemmas:
             if term.antonyms():
@@ -23,22 +24,26 @@ def get_antonym_word_list(word):
             for term in sim_syn._lemmas:
                 if term.antonyms():
                     antonym_word_list.append(term.antonyms()[0].name())
+
     return list(set(antonym_word_list))
 
 def get_syn_word_list(word):
     syn_word_list = []
+
     for _, sys in enumerate(wn.synsets(word)):
         for term in sys.lemma_names():
             if word.lower() not in term.lower() and word.lower() not in term.lower() and len(term.split('_'))==1 and len(term.split('-'))==1:
                 syn_word_list.append(term)
+
     return list(set(syn_word_list))
 
-def get_word_dic(data_paths,save_path,vocab_path):
+def get_word_dic(data_paths,save_path,vocab_path,k):
     stop_words = set(stopwords.words('english'))
     frequen={}
     all_vocab=set()
     vocab,syn_vocab=set(),set()
     word_dic={}
+
     for data_path in data_paths:
         with open(data_path,encoding='utf-8') as f:
             for line in tqdm(f):
@@ -54,6 +59,7 @@ def get_word_dic(data_paths,save_path,vocab_path):
                         vocab.add(word)
                     if pos in (NOUN):
                         syn_vocab.add(word)
+
     for word in vocab:
         if word in stop_words:
             continue
@@ -86,7 +92,7 @@ def get_word_dic(data_paths,save_path,vocab_path):
             result = sorted(syn_word_dic.items(), key = lambda x :(-x[1]))
             num=0
             for tup in result:
-                if(num>=1):
+                if(num>=k):
                     break
                 word_list.append(tup[0])
                 num+=1
@@ -108,6 +114,7 @@ def get_word_dic(data_paths,save_path,vocab_path):
         word_list=[]
         syn_word_list = get_syn_word_list(word)
         syn_word_dic={}
+
         for syn_word in syn_word_list:
             if syn_word in frequen:
                 syn_word_dic[syn_word]=frequen[syn_word]
@@ -116,7 +123,7 @@ def get_word_dic(data_paths,save_path,vocab_path):
         result = sorted(syn_word_dic.items(), key = lambda x :(-x[1]))
         num=0
         for tup in result:
-            if(num>=1):
+            if(num>=k):
                 break
             word_list.append(tup[0])
             num+=1
@@ -139,38 +146,46 @@ def get_word_dic(data_paths,save_path,vocab_path):
 
 def load_word_dic(dic_path):
     word_dic={}
+
     with open(dic_path,encoding='utf-8') as f:
         for line in f:
             word,new_word = line.strip().split()
             word_dic[word]=new_word.split(',')
+            
     return  word_dic
 
 def load_vocab(vocab_path):
     w2id,id2w = {'[PAD]':0,'[UNK]':1,'[MUL]':2},{0:'[PAD]',1:'[UNK]',2:'[MUL]'}
     index = 0
+
     with open(vocab_path, encoding='utf-8') as f:
         for line in f:
             word = line.strip()
             w2id[word] = index+3
             id2w[index+3]=word
             index+=1
+
     return w2id,id2w,index+3
 
 def get_new_sentence(sentence,word_dic):
     sentence=sentence.split()
     new_sentence=[]
+
     for word in sentence:
         if word in word_dic:
             new_sentence.append(word_dic[word])
         else:
             new_sentence.append([word])
+
     return new_sentence
 
 def token_2_sentence(id_list,id2w):
     sentence_list=[]
+
     for index in id_list:
         if(index==0):
             break
         sentence_list.append(id2w[index])
+
     return ' '.join(sentence_list)
 
