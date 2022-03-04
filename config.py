@@ -4,22 +4,23 @@ import torch
 class Config(object):
 
     def __init__(self):
-        #
-        self.data_type = 'sst5' #you can change the dataset here, and 'sst','rt','sst5','yelp' are available
+        self.data_type = 'sst5'
         self.num_labels = 5 if self.data_type=='sst5' or self.data_type=='yelp' else 2
-        self.m = 16
-        self.t = 0.8 if self.num_labels == 2 else 0.4
+        self.m = 32
+        self.k=3
+        self.t = 0.8 if self.num_labels == 2 else 0.5
 
         self.max_seqlen=50
         self.hid_size = 300
-        self.batch_size = 32
+        self.batch_size = 16
+        self.rl_batch_size= 8
         self.emb_dim = 300
         self.lr=1e-3
         self.dropout=0.3
         self.device =torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.pretrained_cls_epoch = 80
-        self.pretrained_lm_epoch = 20
+        self.pretrained_lm_epoch = 40
         self.rl_lm_epoch = 60
 
         self.sc_max_acc=0
@@ -37,6 +38,7 @@ class Config(object):
 
         self.train_path,self.val_path,self.test_path,self.ant_dic_path,self.syn_dic_path,\
             self.new_train_path,self.new_val_path,self.new_test_path,self.sc_save_path=self.get_data_path()
+        self.data_path=[self.train_path,self.val_path,self.test_path]
 
     def get_data_path(self):
         if self.data_type=='rt':
@@ -56,8 +58,9 @@ class Config(object):
             train_path='./data/'+self.data_type+'/yelp.train'
             val_path='./data/'+self.data_type+'/yelp.dev'
             test_path='./data/'+self.data_type+'/yelp.test'
-            self.epoch=20
-            self.pretrained_epoch=10
+            self.pretrained_cls_epoch=20
+            self.pretrained_lm_epoch=10
+            self.rl_lm_epoch=20
             self.max_seqlen=120
         ant_dic_path='./data/'+self.data_type+'/ant_voc.txt'
         syn_dic_path='./data/'+self.data_type+'/syn_voc.txt'
@@ -67,5 +70,3 @@ class Config(object):
         sc_save_path='./data/'+self.data_type+'/model_save/cls_model.pkl'
 
         return train_path,val_path,test_path,ant_dic_path,syn_dic_path,new_train_path,new_val_path,new_test_path,sc_save_path
-
-
