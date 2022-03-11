@@ -76,7 +76,7 @@ def get_word_dic(data_paths,save_path,vocab_path,k):
             result = sorted(ant_word_dic.items(), key = lambda x :(-x[1]))
             num=0
             for tup in result:
-                if(num>=1):
+                if(num>=k):
                     break
                 word_list.append(tup[0])
                 num+=1
