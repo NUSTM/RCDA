@@ -69,11 +69,7 @@ class lstm_generator(nn.Module):
             sample.append(output[:, i, :].multinomial(1, replacement=True))
         sample = torch.cat(sample, dim=1)
         sample = sample.masked_fill(pad_matrix, 0)
-        # for index, txt_id in enumerate(sample):
-        #     raw_txt = bertid_2_sentence(txt_id.tolist())
-        #     print(raw_txt)
-
-        # print('sample.shape:',sample.shape)
+      
         return sample
     
     def get_text(self, src, mask_matrix, pad_matrix):
@@ -82,11 +78,7 @@ class lstm_generator(nn.Module):
         output = output.masked_fill(mask_matrix, -float('inf'))
         
         new_id = output.argmax(-1)
-        # for index, txt_id in enumerate(sample):
-        #     raw_txt = bertid_2_sentence(txt_id.tolist())
-        #     print(raw_txt)
-
-        # print('sample.shape:',sample.shape)
+      
         return new_id
 
 
